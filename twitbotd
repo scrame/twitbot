@@ -1,0 +1,20 @@
+#!/usr/bin/perl -wl
+
+use strict;
+use Net::Twitter;
+use Scalar::Util 'blessed';
+
+#get credentials
+
+my $user = $ENV{twitbot_user};
+my $pass = $ENV{twitbot_pass};
+print "user: $user pass: $pass"; 
+
+my $nt = Net::Twitter->new(
+    traits   => [qw/API::REST/],
+    username => $user,
+    password => $pass,
+    clientname => "twitbotd"    
+    );
+
+my $result = $nt->update('changing client!');

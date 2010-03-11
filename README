@@ -1,0 +1,10 @@
+Twitbot is just a stupid automated twitter script to make humorous comments. I dont expect anyone to use it other than me, and it will not be posting to my main twitter feed. So whatever.
+
+It works like this (so far):
+
+The environment variables:
+twitbot_user
+and 
+twitbot_pass
+configure the user name and password for the bot to post to.
+
