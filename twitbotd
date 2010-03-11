@@ -11,10 +11,11 @@ my $pass = $ENV{twitbot_pass};
 print "user: $user pass: $pass"; 
 
 my $nt = Net::Twitter->new(
-    traits   => [qw/API::REST/],
+    traits   => [qw/OAuth API::REST/],
     username => $user,
     password => $pass,
-    clientname => "twitbotd"    
+    consumer_key => "WccGI1q18LpM4EZ1yHC9Gw",
+    consumer_secret => "LWhnR6UItmKDed6iOq0dSEmHnb3TSDbhOOcORKoO1A"
     );
 
-my $result = $nt->update('changing client!');
+my $result = $nt->update('changing client! ' . localtime());
