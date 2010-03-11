@@ -1,10 +1,14 @@
 Twitbot is just a stupid automated twitter script to make humorous comments. I dont expect anyone to use it other than me, and it will not be posting to my main twitter feed. So whatever.
 
-It works like this (so far):
+It has a dependency on Net::Twitter from cpan, on debian I was able to install this by just typing:
 
-The environment variables:
-twitbot_user
-and 
-twitbot_pass
-configure the user name and password for the bot to post to.
+ sudo cpan Net::Twitter
+
+Your method may vary, but its necessary, and that has a full dependency on Moose and a few other things, too. I didn't say this was packaged for general consumption.
+
+Currently it just runs a single piece that logs in and posts the first thing passed in. Like so:
+
+ ./twitbotd 'this is a test message'
+
+If this is your first time running, it will ask you to paste a link into your browser to properly authenticate you. Its a little clunky, but not difficult. Give it a shot.
 
