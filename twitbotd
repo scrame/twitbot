@@ -6,16 +6,72 @@ use Scalar::Util 'blessed';
 
 #get credentials
 
-my $user = $ENV{twitbot_user};
-my $pass = $ENV{twitbot_pass};
-print "user: $user pass: $pass"; 
-
 my $nt = Net::Twitter->new(
     traits   => [qw/OAuth API::REST/],
-    username => $user,
-    password => $pass,
     consumer_key => "WccGI1q18LpM4EZ1yHC9Gw",
     consumer_secret => "LWhnR6UItmKDed6iOq0dSEmHnb3TSDbhOOcORKoO1A"
     );
 
-my $result = $nt->update('changing client! ' . localtime());
+
+
+
+# You'll save the token and secret in cookie, config file or session database
+#my($access_token, $access_token_secret) = restore_tokens();
+my $access_token = get_access_token();
+my $access_token_secret = get_secret_token();
+if ($access_token && $access_token_secret) {
+    $nt->access_token($access_token);
+    $nt->access_token_secret($access_token_secret);
+}
+
+unless ( $nt->authorized ) {
+      # The client is not yet authorized: Do it now
+    print "Authorize this app at ", $nt->get_authorization_url, " and enter the PIN#\n";
+
+    my $pin = <STDIN>; # wait for input
+    chomp $pin;
+
+    my($access_token, $access_token_secret, $user_id, $screen_name) = $nt->request_access_token(verifier => $pin);
+    save_tokens($access_token, $access_token_secret); # if necessary
+}
+
+
+
+
+my $result = $nt->update({status => "$ARGV[0]"});
+
+
+sub save_tokens {
+    my ($access_token, $access_token_secret) = @_;
+    my $fh;
+    open $fh, '>', ".token";
+    print $fh $access_token;
+    close $fh;
+    open $fh, '>', ".secret";
+    print $fh $access_token_secret;
+    close $fh;
+}
+
+
+sub _get_token {
+    my $token_file = shift;
+    
+    if ( -e $token_file ) {
+        my $fh;
+        open $fh, '<', $token_file;
+        my $token = <$fh>;
+        chomp $token;
+        return $token;
+    }
+
+    return undef;
+
+}
+
+sub get_access_token {
+    return _get_token(".token");
+}
+
+sub get_secret_token {
+    return _get_token(".secret");
+}
