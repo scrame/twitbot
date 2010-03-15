@@ -12,10 +12,14 @@ void clear_tweet() {
   }
 }
 
+void generate_tweet() {
+
+}
+
 int main(int ac, char *av) {
   
   clear_tweet();
-
+  generate_tweet();
   printf("%s\n",tweet);
   return 0;
 }
