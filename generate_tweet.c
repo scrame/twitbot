@@ -12,19 +12,10 @@ void clear_tweet() {
   }
 }
 
-void print_tweet() {
-  int i;
-  for( i=0 ; i < TWEET_LENGTH ; i++ ) {
-    printf("%c",tweet[i]);
-  }
-  printf("\n");
-}
-
-
 int main(int ac, char *av) {
   
   clear_tweet();
 
-  print_tweet();
+  printf("%s\n",tweet);
   return 0;
 }
