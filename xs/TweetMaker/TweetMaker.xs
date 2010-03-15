@@ -7,3 +7,8 @@
 
 MODULE = TweetMaker		PACKAGE = TweetMaker		
 
+void
+generate_tweet()
+        CODE:
+                printf("XS Tweet\n");
+
